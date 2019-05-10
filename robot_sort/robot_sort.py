@@ -94,28 +94,48 @@ class SortingRobot:
         """
         return self._light == "ON"
 
+    """ 
+    Plan: 
+    - While robot is swapping, the light is off. When finished(no swaps were made), light is on(Break). 
+    - Robot starts at the beginning of the list (index 0) with nothing in its hands.
+    - Pick up first item, swap, leaving "None" in its place.
+    - Move right
+    - Compares item in hand with item at next index.
+    - If the item is smaller than what is in hand currently, move left to first empty index
+    - Swap item with "None"
+    - Repeat steps above until no swaps are made. Turn on light to indicate the
+    array is sorted
+    - Break out of loop
+    - Return sorted array
+    """
 
-""" 
-Plan: 
-- While robot is swapping, the light is on. When finished(no swaps were made), light is off(Break). 
-- Robot starts at the beginning of the list (index 0) with nothing in its hands.
-- Pick up first item, swap, leaving "None" in its place.
-- Move right
-- Compares item in hand with item at next index.
-- If the item is smaller than what is in hand currently, move left to first empty index
-- Swap item with "None"
-- Repeat steps above until no swaps are made. Turn off light to indicate the
-  array is sorted
-- Break out of loop
-- Return sorted array
-"""
-
-
-def sort(self):
+    def sort(self):
         """
         Sort the robot's list.
         """
         # Fill this out
+        while self.light_is_on == False:
+            self.set_light_on()
+            if self.can_move_right():
+                self.swap_item()
+                self.move_right()
+
+                if self.compare_item() == 1:
+                    self.swap_item()
+                    self.set_light_off()
+                    self.move_left()
+                    self.swap_item()
+                    self.move_right()
+                elif self.compare_item() == -1:
+                    self.move_left()
+                    self.swap_item()
+                    self.set_light_off()
+                    self.move_right()
+                elif self.compare_item() == 0 or None:
+                    self.move_left()
+                    self.swap_item()
+                    self.set_light_off()
+                    self.move_right()
 
 
 if __name__ == "__main__":
